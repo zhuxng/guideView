@@ -1,0 +1,18 @@
+PODS:
+  - Masonry (0.6.4)
+  - SHButton (0.1.9)
+  - SHGuideView (0.1.1):
+    - Masonry (~> 0.6.4)
+    - SHButton (~> 0.1.9)
+
+DEPENDENCIES:
+  - SHGuideView
+
+SPEC CHECKSUMS:
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  SHButton: 7f73c7a633fa427fb847aa0427719f102a8dc558
+  SHGuideView: 12814ce3cedf1414311e30fec466cd23e2e8463f
+
+PODFILE CHECKSUM: 7f4c4345b36b0bda718fc55c399883d30c648e28
+
+COCOAPODS: 1.1.1

@@ -1,0 +1,6 @@
+framework module SHGuideView {
+  umbrella header "SHGuideView-umbrella.h"
+
+  export *
+  module * { export * }
+}

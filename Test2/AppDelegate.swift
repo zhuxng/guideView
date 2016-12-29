@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SHGuideView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,10 +16,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        self.window?.backgroundColor = UIColor.white
+        self.window?.makeKeyAndVisible()
+        pushRootViewController()
+        
         return true
     }
+    
+    func pushRootViewController()  {
+        
+        
+        if SHGuideViewController.needShowGuidePage() {
+            let guideViewController = SHGuideViewController(imageName: "Guide", guidePage: 3, completeHandle: {
+                self.pushMainViewController()
+            })
+            let btn = UIButton()
+            btn.setBackgroundImage(UIImage(named: "取消按钮"), for: .normal)
+            btn.setTitle("立刻体验", for: .normal)
+            guideViewController?.userComfirmButton = btn
+            
+//            guideViewController?.comfirmButtonTitle = "立刻体验"
+            guideViewController?.comfirmButtonTitleColor = UIColor.red
+            guideViewController?.pageIndicatorTintColor  = UIColor.red
+            
+            guideViewController?.currentPageIndicatorTintColor = UIColor.white
+            
+            let w = UIScreen.main.bounds.width
+            let h = UIScreen.main.bounds.height
+            
+            guideViewController?.userComfirmButton.bounds = CGRect(x: w / 2 - 50, y: h - 20, width: 100, height: 50)
+            UIView.transition(with: ((UIApplication.shared.delegate?.window)!)!, duration: 1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+                let oldState = UIView.areAnimationsEnabled
+                UIView.setAnimationsEnabled(false)
+                self.window?.rootViewController = guideViewController
+                UIView.setAnimationsEnabled(oldState)
+            }, completion: { (bool) in
+                print(bool)
+            })
+        }else {
+            pushMainViewController()
+        }
+    }
 
+    
+    func pushMainViewController() {
+        
+        let maiViewController = ViewController()
+        let navgationController = UINavigationController(rootViewController: maiViewController)
+        UIView.transition(with: ((UIApplication.shared.delegate?.window)!)!, duration: 1, options: UIViewAnimationOptions.transitionCrossDissolve, animations: {
+            
+            
+            let oldState = UIView.areAnimationsEnabled
+            UIView.setAnimationsEnabled(false)
+            self.window?.rootViewController = navgationController
+            UIView.setAnimationsEnabled(oldState)
+            
+        }, completion: nil)
+        
+        
+    }
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
